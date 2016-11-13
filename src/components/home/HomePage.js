@@ -8,6 +8,7 @@ import {browserHistory} from 'react-router';
 import toastr from 'toastr';
 import {Button}  from 'react-bootstrap';
 import {Movie} from '../../data/movie';
+import {moviesData} from '../../data/moviesData';
 
 class HomePage extends React.Component {
   constructor(props, context) {
@@ -29,26 +30,23 @@ class HomePage extends React.Component {
   }
 
   AddMovies() {
-    console.log('AddMoviesFunctui');
-
+    let index;
     let m  = new Movie({title: 'Pass Thru', year: '2016', links: { 1 : 'firstlink', 2 : 'second' }});
-
-    this.props.mov.createMovie(m);
+    for (index = 0; index < moviesData.length; ++index) {
+         this.props.mov.createMovie(moviesData[index]);
+    }
+    //this.props.mov.createMovie(moviesData[0]);
   }
 
   LogAllMovies()
   {
-    console.log('log all movies fucntion');
-
     this.props.mov.loadMovies();
   }
 
   render() {
     const {posts} = this.props;
-    console.log(this.props);
     return (
       <div>
-      /* you can add admin panel here */
         <Button onClick={() => this.AddMovies()}>Add Movies</Button>
         <Button onClick={() => this.LogAllMovies()}>List Movies</Button>
         <PostGrid posts={posts} onChange={this.updatePostsState} />

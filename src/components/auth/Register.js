@@ -60,12 +60,10 @@ componentDidMount() {
 
   handleFormSubmit (event) {
     event.preventDefault();
-    console.log(this.state);
     let errors={};
     errors = this.state.errors;
 
     let ers = validate(this.state.data);
-    console.log(ers);
 
     errors.email = ers.emaill;
     errors.password = ers.password;
@@ -74,10 +72,8 @@ componentDidMount() {
     /* eslint-disable no-console */
 
     /* eslint-enable no-console */
-    console.log(errors);
     if(!errors.email && !errors.password)
     {
-      console.log('no errors');
       this.props.actions.signUpUser(this.state.data);
       this.setState({dirty: false});
     }
@@ -112,11 +108,6 @@ setValue(field, event) {
    this.setState({dirty: true});
  }
 
-  redirect() {
-
-    console.log('redirect');
-    console.log(this.context.router);
-  }
 
 render() {
   return (

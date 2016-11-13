@@ -3,27 +3,31 @@ import * as types from './actionTypes';
 import {beginAjaxCall} from './ajaxStatusActions';
 import { getDeletedMovie } from '../selectors/movieSelectors';
 import { moviesList } from '../api/FirebaseApi';
+import axios from 'axios';
+import {browserHistory} from 'react-router';
 
-//export function loadMoviesSuccess(movies) {
-//  return {type: types.LOAD_MOVIES_SUCCESS, movies};
-//}
+// export function searchMovies(query = '') {
+//   return axios.get('http://localhost:3000/movies?q='+ query)
+//     .then(response => {
+//       dispatch(loadMoviesSuccess(response.data));
+//       return response;
+//     });
+// }
 
-//export function loadMovies() {
-//  return dispatch => {
-    //dispatch(beginAjaxCall());
-    //return MovieApi.getAllMovies().then(movies => {
-//      dispatch(loadMoviesSuccess(movies));
-  //  }).catch(error => {
-    //  throw(error);
-    //});
-  //};
-//}
+export function filterMovies(filter) {
+  //browserHistory.push('movies/q=' + filter);
+    return {
+      type: types.FILTER_MOVIES,
+      payload: {filter}
+    };
+}
+
 
 export function createMovie(movie) {
   console.log('create movie action');
   console.log(movie);
   return dispatch => {
-    moviesList.push({title: movie.title, year: movie.year, links: movie.links})
+    moviesList.push(movie)
       .catch(error => dispatch(createMovieError(error)));
   };
 }
@@ -49,17 +53,12 @@ export function loadMoviesSuccess(movies) {
   };
 }
 
-export function filterMovies(filterType) {
-  return {
-    type: types.FILTER_MOVIES,
-    payload: {filterType}
-  };
-}
-
 export function loadMovies() {
   return (dispatch, getState) => {
     const { auth } = getState();
-    moviesList.path = `movies/${auth.id}`;
+    //moviesList.path = `movies/${auth.id}`;
+    moviesList.path = 'movies/';
+    console.log('Movies path:'  + moviesList.path);
     moviesList.subscribe(dispatch);
   };
 }

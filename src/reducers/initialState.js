@@ -1,13 +1,16 @@
 
 export default {
   posts: [],
-  movies: [],
+  movies: {
+    moviesList: [],
+    filterValue : '',
+    processed : false
+  },
   users: [],
   ajaxCallsInProgress: 0,
-  auth:
-    {
-      authenticated: false,
-      error: null,
+  auth: {
+      authenticated  : false,
+      error : null,
       processed : false
     },
     contactPage: null

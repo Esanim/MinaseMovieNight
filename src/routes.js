@@ -17,8 +17,10 @@ export default (
     <Route path="/" component={App}>
       <IndexRoute component={HomePage} />
 
-      <Route path="movies" component={RequireAuth(MoviesPage)}>
-        <Route path=":movieId" component={RequireAuth(MoviePage)} />
+      <Route path="movies" >
+        <IndexRoute component={RequireAuth(MoviesPage)} />
+        <Route path="q=:x" component={RequireAuth(MoviesPage)} />
+        <Route path=":movieId" component={RequireAuth(MoviePage)}></Route>
       </Route>
 
       <Route path="users" component={RequireAuth(UsersPage)} >

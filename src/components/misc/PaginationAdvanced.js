@@ -1,20 +1,20 @@
 import React from 'react';
 import {Pagination} from 'react-bootstrap';
 
-const PaginationAdvanced = React.createClass({
-  getInitialState() {
-    return {
-      activePage: 1
-    };
-  },
+const PaginationAdvanced = ({itemCount, maxButtons, activePage, onSelect}) => {
+  // getInitialState() {
+  //   return {
+  //     activePage: 1
+  //   };
+  // },
+  //
+  // handleSelect(eventKey) {
+  //   this.setState({
+  //     activePage: eventKey
+  //   });
+  // },
 
-  handleSelect(eventKey) {
-    this.setState({
-      activePage: eventKey
-    });
-  },
-
-  render() {
+  //render() {
     return (
       <Pagination
         prev
@@ -23,12 +23,12 @@ const PaginationAdvanced = React.createClass({
         last
         ellipsis
         boundaryLinks
-        items={20}
-        maxButtons={5}
-        activePage={this.state.activePage}
-        onSelect={this.handleSelect} />
+        items={itemCount}
+        maxButtons={maxButtons}
+        activePage={activePage}
+        onSelect={onSelect} />
     );
-  }
-});
+  //}
+};
 
 export default PaginationAdvanced;

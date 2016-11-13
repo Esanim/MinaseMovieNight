@@ -3,9 +3,11 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as movieActions from '../../actions/movieActions';
 import {Media} from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import {Link} from 'react-router';
 import CSSTransitionGroup from 'react-addons-css-transition-group'
-import StarRatingComponent from 'react-star-rating-component';
+import StarRatingComponent from '../misc/StarRatingComponent';
+import {firebaseStorage} from '../../services/firebase/index';
 
 class Movie extends React.Component {
   constructor(props) {
@@ -13,7 +15,7 @@ class Movie extends React.Component {
 
     this.state = {
     rating: 1
-};
+    };
 
     this.increment = this.increment.bind(this)
     this.decrement = this.decrement.bind(this)
@@ -33,6 +35,7 @@ class Movie extends React.Component {
       this.setState({rating: nextValue});
   }
 
+
   render() {
     const { rating } = this.state;
     const {movie, comments} = this.props
@@ -42,10 +45,14 @@ class Movie extends React.Component {
 <div>
       <Media>
        <Media.Left>
-          <img width={256} height={256} src={movie.img} alt="Image"/>
+       <LinkContainer to={'/movies/' + movie.id}>
+          <img className="handCursor" width={256} height={256} src={movie.img} alt="Image"/>
+        </LinkContainer>
         </Media.Left>
         <Media.Body>
-          <Media.Heading>{movie.title} ({movie.year})</Media.Heading>
+        <LinkContainer to={'/movies/' + movie.id}>
+          <a>{movie.title} ({movie.year})</a>
+        </LinkContainer>
           <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
 
         </Media.Body>
@@ -83,8 +90,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 function mapStateToProps(state, props) {
-  console.log('Movie ap state to props');
-  console.log(state);
   return {
     comments: []
   }
@@ -93,5 +98,6 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(movieActions, dispatch)
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Movie);

@@ -42,12 +42,11 @@ class Login extends React.Component {
 
   handleFormSubmit (event) {
     event.preventDefault();
-    console.log(this.state);
+
     let errors={};
     errors = this.state.errors;
 
     let ers = validate(this.state.data);
-    console.log(ers);
 
     errors.email = ers.emaill;
     errors.password = ers.password;
@@ -56,10 +55,8 @@ class Login extends React.Component {
     /* eslint-disable no-console */
 
     /* eslint-enable no-console */
-    console.log(errors);
     if(!errors.email && !errors.password)
     {
-      console.log('no errors');
       this.props.signInUser(this.state.data);
     }
   }
