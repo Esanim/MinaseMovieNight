@@ -34,6 +34,7 @@ class Login extends React.Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.renderAuthenticationError = this.renderAuthenticationError.bind(this);
     this.renderField = this.renderField.bind(this);
+    //this.this.setValue = this.this.setValue.bind(this);
   }
 
   componentDidMount() {
@@ -72,7 +73,7 @@ class Login extends React.Component {
      //If the input fields were directly within this
      //this component, we could use this.refs.[FIELD].value
      //Instead, we want to save the data for when the form is submitted
-     var object = this.state.data;
+     let object = this.state.data;
      object[field] = event.target.value;
      this.setState({data: object});
    }
@@ -120,7 +121,8 @@ class Login extends React.Component {
 
 Login.propTypes = {
   signInUser: React.PropTypes.func.isRequired,
-  authenticationError: PropTypes.string
+  authenticationError: PropTypes.string,
+  cleanError: PropTypes.func
 };
 
 

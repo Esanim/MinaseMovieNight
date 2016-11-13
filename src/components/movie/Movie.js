@@ -1,34 +1,35 @@
 import React, {PropTypes} from 'react';
-import {bindActionCreators} from 'redux'
-import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import * as movieActions from '../../actions/movieActions';
 import {Media} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import {Link} from 'react-router';
-import CSSTransitionGroup from 'react-addons-css-transition-group'
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 import StarRatingComponent from '../misc/StarRatingComponent';
 import {firebaseStorage} from '../../services/firebase/index';
 
 class Movie extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
     rating: 1
     };
 
-    this.increment = this.increment.bind(this)
-    this.decrement = this.decrement.bind(this)
+    this.onStarClick = this.onStarClick.bind(this);
+    this.increment = this.increment.bind(this);
+    this.decrement = this.decrement.bind(this);
   }
 
   increment(event) {
     event.preventDefault();
-    this.props.increment(this.props.movie.code)
+    this.props.increment(this.props.movie.code);
   }
 
   decrement(event) {
     event.preventDefault();
-    this.props.decrement(this.props.movie.code)
+    this.props.decrement(this.props.movie.code);
   }
 
   onStarClick(nextValue, prevValue, name) {
@@ -38,7 +39,7 @@ class Movie extends React.Component {
 
   render() {
     const { rating } = this.state;
-    const {movie, comments} = this.props
+    const {movie, comments} = this.props;
 
     return (
 
@@ -61,10 +62,10 @@ class Movie extends React.Component {
         <StarRatingComponent
                name="rate1"
                editing={false}
-               renderStarIcon={() => <span></span>}
+               renderStarIcon={<span></span>}
                starCount={7}
                value={rating}
-               onStarClick={this.onStarClick.bind(this)}
+               onStarClick={this.onStarClick}
            />
            <div>
              Rating: 3.44
@@ -78,7 +79,7 @@ class Movie extends React.Component {
         </Media.Body>
       </Media>
       </div>
-    )
+    );
   }
 }
 
@@ -86,17 +87,22 @@ if (process.env.NODE_ENV !== 'production') {
   Movie.propTypes = {
     movie: React.PropTypes.object,
     comments: React.PropTypes.arrayOf(React.PropTypes.object)
-  }
+  };
 }
+
+Movie.propTypes = {
+  increment: PropTypes.object,
+  decrement: PropTypes.object
+};
 
 function mapStateToProps(state, props) {
   return {
     comments: []
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(movieActions, dispatch)
+  return bindActionCreators(movieActions, dispatch);
 }
 
 

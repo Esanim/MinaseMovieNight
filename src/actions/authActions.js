@@ -2,6 +2,9 @@ import * as types from './actionTypes';
 import {beginAjaxCall} from './ajaxStatusActions';
 import {browserHistory} from 'react-router';
 import {firebaseApp as Firebase} from '../services/firebase/index';
+import store from '../index.js';
+import {loadMovies} from './movieActions';
+import {loadPosts} from './postActions';
 
 export function signUpUser(credentials) {
   return function(dispatch) {
@@ -11,7 +14,9 @@ export function signUpUser(credentials) {
         browserHistory.push('/movies');
       })
       .catch(error => {
+        /* eslint-disable no-console */
         console.log('error in sinupuser');
+        /* eslint-enable no-console */
         dispatch(authError(error));
       });
   };
@@ -25,7 +30,9 @@ export function signInUser(credentials) {
         browserHistory.push('/movies');
       })
       .catch(error => {
+        /* eslint-disable no-console */
         console.log(error);
+        /* eslint-enable no-console */
         dispatch(authError(error));
       });
   };
@@ -41,10 +48,12 @@ export function signOutUser()
     })
     .catch(error =>
     {
+      /* eslint-disable no-console */
       console.log(error);
+      /* eslint-enable no-console */
       dispatch(authError(error));
     });
-  }
+  };
 }
 
 export function signedOut()
@@ -67,6 +76,8 @@ export function verifyAuth() {
 }
 
 export function authUser() {
+  store.dispatch(loadPosts());
+  store.dispatch(loadMovies());
   return {
     type: types.AUTH_USER
   };

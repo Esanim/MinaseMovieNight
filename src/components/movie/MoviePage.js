@@ -28,7 +28,7 @@ MoviePage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const post = ownProps.movie || state.movies.moviesList.find(movie => movie.id === ownProps.params.movieId)
+  const post = ownProps.movie || state.movies.moviesList.find(movie => movie.id === ownProps.params.movieId);
 
   return {
     movie: post

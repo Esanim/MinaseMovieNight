@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import cx from 'classnames';
 
 class StarRatingComponent extends Component {
@@ -139,5 +140,19 @@ class StarRatingComponent extends Component {
     );
   }
 }
+
+StarRatingComponent.propTypes = {
+      name: PropTypes.string.isRequired,
+      value: PropTypes.number,
+      editing: PropTypes.bool,
+      starCount: PropTypes.number,
+      starColor: PropTypes.string,
+      onStarClick: PropTypes.func,
+      renderStarIcon: PropTypes.object,
+      renderStarIconHalf: PropTypes.object,
+      emptyStarColor: PropTypes.string,
+      className: PropTypes.string
+  };
+
 
 export default StarRatingComponent;

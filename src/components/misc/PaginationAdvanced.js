@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Pagination} from 'react-bootstrap';
 
 const PaginationAdvanced = ({itemCount, maxButtons, activePage, onSelect}) => {
@@ -30,5 +30,12 @@ const PaginationAdvanced = ({itemCount, maxButtons, activePage, onSelect}) => {
     );
   //}
 };
+
+PaginationAdvanced.propTypes = {
+    itemCount: PropTypes.number,
+    maxButtons: PropTypes.number,
+    activePage: PropTypes.number,
+    onSelect: PropTypes.func.isRequired
+  };
 
 export default PaginationAdvanced;

@@ -20,7 +20,7 @@ export default (
       <Route path="movies" >
         <IndexRoute component={RequireAuth(MoviesPage)} />
         <Route path="q=:x" component={RequireAuth(MoviesPage)} />
-        <Route path=":movieId" component={RequireAuth(MoviePage)}></Route>
+        <Route path=":movieId" component={RequireAuth(MoviePage)} />
       </Route>
 
       <Route path="users" component={RequireAuth(UsersPage)} >

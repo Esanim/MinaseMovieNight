@@ -25,7 +25,7 @@ export function getDeletedMovie(state) {
 export const getVisibleTasks = createSelector(
   getMoviesList,
   getMoviesFilter,
-  (movie, filter) => {
+  (movies, filter) => {
     switch (filter) {
       case 'active':
         return movies.filter(movie => !movie.completed);

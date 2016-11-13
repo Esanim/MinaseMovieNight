@@ -17,6 +17,7 @@ const store = configureStore();
 store.dispatch(verifyAuth());
 store.dispatch(loadMovies());
 store.dispatch(loadPosts());
+export default store;
 
 render(
   <Provider store={store}>

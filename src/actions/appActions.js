@@ -1,4 +1,6 @@
 import * as types from './actionTypes';
+import {beginAjaxCall} from './ajaxStatusActions';
+import MovieApi from '../api/mockMovieApi';
 
 export function loadMoviesSuccess(movies) {
   return {type: types.LOAD_MOVIES_SUCCESS, movies};

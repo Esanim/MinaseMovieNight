@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as movieActions from '../../actions/movieActions';
-import {browserHistory} from 'react-router';
+import {browserHistory, withRouter} from 'react-router';
 import toastr from 'toastr';
 import Movie from './Movie';
 import PaginationAdvanced from '../misc/PaginationAdvanced';
-import {withRouter} from 'react-router';
-
 
 class MovieList extends React.Component {
   constructor(props, context) {
@@ -20,8 +18,19 @@ class MovieList extends React.Component {
       films:[]
     };
 
-
+    this.updatePageIndex = this.updatePageIndex.bind(this);
     this.filterMoviesForPagination = this.filterMoviesForPagination.bind(this);
+    this.updatePageIndex = this.updatePageIndex.bind(this);
+
+  }
+  componentDidMount() {
+    // console.log('componentDidMount');
+    //this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave.bind(this));
+/* eslint-disable no-console */
+     console.log(window.pageYOffset);
+     console.log(window.scrollY);
+     /* eslint-enable no-console */
+
   }
 
   componentWillUpdate() {
@@ -34,15 +43,7 @@ class MovieList extends React.Component {
   componentDidUpdate() {
   }
 
-  componentDidMount() {
-    // console.log('componentDidMount');
-    this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave.bind(this));
-
-     console.log(window.pageYOffset);
-     console.log(window.scrollY);
-  }
-
- routerWillLeave(nextLocation) {
+ //routerWillLeave(nextLocation) {
   //  console.log('router wwill leave');
   //  console.log(nextLocation);
   //
@@ -51,7 +52,8 @@ class MovieList extends React.Component {
   //    console.log('FITLER MOVIES router wwill elave');
   //    this.props.actions.filterMovies("");
   // }
- }
+
+ //}
 
 // handles updated page count
 // updatePageCount(e) {
@@ -74,9 +76,8 @@ class MovieList extends React.Component {
   }
 
   filterMoviesForPagination() {
-    console.log('this is filterMoviesForPagination');
     this.state.films = [];
-    for (var i = this.returnStartingIndex(); i < this.returnEnding(); i++) {
+    for (let i = this.returnStartingIndex(); i < this.returnEnding(); i++) {
       this.state.films.push(this.props.movies[i]);
     }
   }
@@ -98,7 +99,6 @@ class MovieList extends React.Component {
       <div>
         <div className="control-butns">
           <p>Movie Results: {this.props.movies.length} </p>
-          <button onClick={() => this.ontest()}> test </button>
         </div>
 
           {this.state.films.map((movie, i) =>
@@ -106,8 +106,8 @@ class MovieList extends React.Component {
           )}
 
         <div className="inner"   id="inner">
-        <PaginationAdvanced itemCount={Math.ceil(this.props.movies.length/10)} maxButtons={this.state.maxButtons} activePage={this.state.pageIndex}
-          onSelect={this.updatePageIndex.bind(this)}  />
+        <PaginationAdvanced itemCount={Math.ceil(this.props.movies.length/10)} maxButtons={this.state.maxButtons}
+         activePage={this.state.pageIndex} onSelect={this.updatePageIndex} />
         </div>
       </div>
     );
@@ -117,7 +117,8 @@ class MovieList extends React.Component {
 
 MovieList.propTypes = {
   movies: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  processed: PropTypes.bool
 };
 
 MovieList.contextTypes = {
@@ -126,21 +127,14 @@ MovieList.contextTypes = {
 
 
 function mapStateToProps(state, ownProps) {
-
-//console.log('mpts');
-//  console.log(state);
-  //console.log(ownProps);
   let filteredMovies = null;
   if (state.movies.filterValue != undefined){
-    console.log('filter = ' + state.movies.filterValue);
     filteredMovies = [...state.movies.moviesList.filter(movie=> !movie.title.toLowerCase().indexOf(state.movies.filterValue.toLowerCase()))];
-    console.log(filteredMovies);
-    // filteredMovies: [...state.movies.moviesList.filter(movie=> !movie.title.toLowerCase().indexOf(state.movies.filterValue.toLowerCase()))];
-    // console.log(filteredMovies);
   }
 
   return {
     movies: filteredMovies || state.movies.moviesList,
+    futureIndex : 1,
     processed : state.movies.processed
   };
 }

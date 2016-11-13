@@ -47,8 +47,7 @@ class HomePage extends React.Component {
     const {posts} = this.props;
     return (
       <div>
-        <Button onClick={() => this.AddMovies()}>Add Movies</Button>
-        <Button onClick={() => this.LogAllMovies()}>List Movies</Button>
+        <Button onClick={this.AddMovies}>Add Movies</Button>
         <PostGrid posts={posts} onChange={this.updatePostsState} />
       </div>
     );
@@ -57,7 +56,8 @@ class HomePage extends React.Component {
 
 HomePage.propTypes = {
   posts: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  mov : PropTypes.object.isRequired
 };
 
 //Pull in the React Router context so router is available on this.context.router.

@@ -6,29 +6,42 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import _find from 'lodash';
 import * as movieActions from '../../actions/movieActions';
+import * as authActions from '../../actions/authActions';
 import TextInput from './TextInput';
+import {bindActionCreators} from 'redux';
 
 class Header extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-this.state = {
-  search: ''
-}
+    this.state = {
+      search: ''
+    };
+
+    //this.setValue = this.setValue.bind(this);
+    this.search = this.search.bind(this);
     this.setValueClear = this.setValueClear.bind(this);
+    this.handleSignout = this.handleSignout.bind(this);
   }
 
   handleSignout(event) {
-    this.props.signOutUser();
+    this.props.actions.signOutUser();
   }
 
   setValueClear() {
-     console.log('tis is setvalkue header')
      this.setState({search: ''});
      ReactDOM.findDOMNode(this.refs.val).value = '';
-     this.props.filterMovies("");
-     console.log(ReactDOM.findDOMNode(this.refs.val));
+     this.props.actions.filterMovies("");
    }
+
+   search(event) {
+     event.preventDefault();
+     this.props.actions.filterMovies(this.state.search);
+   }
+
+   setValue(field, event) {
+      this.setState({search: event.target.value});
+    }
 
   renderAuthLinks() {
     if (this.props.authenticated == true) {
@@ -48,7 +61,7 @@ this.state = {
             </LinkContainer>
 
           <MenuItem divider />
-          <MenuItem eventKey={5.4} onClick={() => this.handleSignout()} >Sign Out</MenuItem>
+          <MenuItem eventKey={5.4} onClick={this.handleSignout} >Sign Out</MenuItem>
         </NavDropdown>
       ];
     } else {
@@ -62,17 +75,6 @@ this.state = {
       ];
     }
   }
-
-
-  search(event) {
-    event.preventDefault();
-    this.props.filterMovies(this.state.search);
-  }
-
-  setValue(field, event) {
-     this.setState({search: event.target.value});
-   };
-
 
 render(){
     return (
@@ -97,11 +99,10 @@ render(){
             </LinkContainer>
 
             <Navbar.Form pullLeft>
-            <form onSubmit={this.search.bind(this)} className="search">
+            <form onSubmit={this.search} className="search">
               <FormGroup controlId="search">
-                <FormControl type="text" onChange={this.setValue.bind(this, 'search')} placeholder="Search Movies..." ref='val' />
+                <FormControl type="text" onChange={this.setValue.bind(this, 'search')} placeholder="Search Movies..." ref="val" />
               </FormGroup>
-
               {' '}
               <Button type="submit">Go!</Button>
               </form>
@@ -117,13 +118,30 @@ render(){
   }
 }
 
-
+Header.propTypes = {
+    authenticated: PropTypes.bool,
+    signOutUser: PropTypes.func,
+    filterMovies: PropTypes.func,
+    actions : PropTypes.Object
+  };
 
 function mapStateToProps(state) {
-  console.log('ASDASDASDASASD');
     return {
       authenticated: state.auth.authenticated
     };
   }
+  //
+  // function mapDispatchToProps(dispatch) {
+  //   return {
+  //     signOutUser: dispatch(authActions.signOutUser),
+  //     filterMovies: dispatch(movieActions.filterMovies)
+  //   };
+  // }
 
-export default connect(mapStateToProps, movieActions)(Header);
+  function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Object.assign({}, movieActions, authActions), dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

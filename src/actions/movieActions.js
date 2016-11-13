@@ -6,14 +6,6 @@ import { moviesList } from '../api/FirebaseApi';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
 
-// export function searchMovies(query = '') {
-//   return axios.get('http://localhost:3000/movies?q='+ query)
-//     .then(response => {
-//       dispatch(loadMoviesSuccess(response.data));
-//       return response;
-//     });
-// }
-
 export function filterMovies(filter) {
   //browserHistory.push('movies/q=' + filter);
     return {
@@ -22,17 +14,14 @@ export function filterMovies(filter) {
     };
 }
 
-
 export function createMovie(movie) {
-  console.log('create movie action');
-  console.log(movie);
   return dispatch => {
     moviesList.push(movie)
       .catch(error => dispatch(createMovieError(error)));
   };
 }
 
-export function createMovieError(erro1r) {
+export function createMovieError(error) {
   return {
     type: types.CREATE_MOVIE_ERROR,
     payload: error
@@ -58,7 +47,6 @@ export function loadMovies() {
     const { auth } = getState();
     //moviesList.path = `movies/${auth.id}`;
     moviesList.path = 'movies/';
-    console.log('Movies path:'  + moviesList.path);
     moviesList.subscribe(dispatch);
   };
 }

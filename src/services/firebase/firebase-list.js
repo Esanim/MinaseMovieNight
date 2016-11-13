@@ -17,14 +17,13 @@ export class FirebaseList {
   }
 
   push(value) {
-    console.log('push fire base list here');
-    console.log(value);
-    console.log(this._path);
     return new Promise((resolve, reject) => {
       firebaseDb.ref('movies')
         .push(value
       ).catch(error => {
+        /* eslint-disable no-console */
         console.log(error);
+        /* eslint-enable no-console */
         throw(error);
       });
     });
@@ -52,9 +51,6 @@ export class FirebaseList {
   }
 
   subscribe(emit) {
-    console.log('this is subscribe');
-    console.log(this._path);
-
     let ref = firebaseDb.ref('movies');
     let initialized = false;
     let list = [];

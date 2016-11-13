@@ -31,6 +31,7 @@ class ContactPage extends React.Component {
       errors: {}
     };
 
+    this.setValue = this.setValue.bind(this);
     this.renderContactPageError = this.renderContactPageError.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
@@ -54,7 +55,7 @@ class ContactPage extends React.Component {
   }
 
   renderContactPageError() {
-  if (this.props.contactPageError) {
+  if (this.props.ContactPageError) {
     return <div className="alert alert-danger">{this.props.ContactPageError}</div>;
   }
     return <div></div>;
@@ -64,7 +65,7 @@ class ContactPage extends React.Component {
      //If the input fields were directly within this
      //this component, we could use this.refs.[FIELD].value
      //Instead, we want to save the data for when the form is submitted
-     var object = this.state.data;
+     let object = this.state.data;
      object[field] = event.target.value;
      this.setState({data: object});
    }
@@ -80,19 +81,19 @@ class ContactPage extends React.Component {
     <form onSubmit={this.handleFormSubmit}>
       <FormGroup controlId="subject">
         <ControlLabel>Subject:</ControlLabel>
-        <FormControl type="text" onChange={this.setValue.bind(this, 'subject')} />
+        <FormControl type="text" onChange={this.setValue} />
         <HelpBlock>{this.state.errors.subject}</HelpBlock>
       </FormGroup>
 
       <FormGroup controlId="name">
         <ControlLabel>Name:</ControlLabel>
-        <FormControl type="text" onChange={this.setValue.bind(this, 'namee')} />
+        <FormControl type="text" onChange={this.setValue} />
         <HelpBlock>{this.state.errors.name}</HelpBlock>
       </FormGroup>
 
       <FormGroup controlId="email">
         <ControlLabel>Email:</ControlLabel>
-        <FormControl type="text" onChange={this.setValue.bind(this, 'email')} />
+        <FormControl type="text" onChange={this.setValue} />
         <HelpBlock>{this.state.errors.email}</HelpBlock>
       </FormGroup>
 
@@ -110,6 +111,11 @@ class ContactPage extends React.Component {
 );
   }
 }
+
+ContactPage.propTypes = {
+    ContactPageError: PropTypes.string,
+    sendEmail: PropTypes.func.isRequired
+  };
 
 function mapStateToProps(state) {
   return {

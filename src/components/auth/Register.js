@@ -44,6 +44,7 @@ constructor(props, context)
 
   this.handleFormSubmit = this.handleFormSubmit.bind(this);
   this.renderAuthenticationError = this.renderAuthenticationError.bind(this);
+  this.setValue = this.setValue.bind(this);
 }
 
 componentDidMount() {
@@ -55,7 +56,7 @@ componentDidMount() {
   // return false to prevent a transition w/o prompting the user,
   // or return a string to allow the user to decide:
   if (this.state.dirty)
-    return 'You have unsaved information, are you sure you want to leave this page?'
+    return 'You have unsaved information, are you sure you want to leave this page?';
 }
 
   handleFormSubmit (event) {
@@ -102,7 +103,7 @@ setValue(field, event) {
    //If the input fields were directly within this
    //this component, we could use this.refs.[FIELD].value
    //Instead, we want to save the data for when the form is submitted
-   var object = this.state.data;
+   let object = this.state.data;
    object[field] = event.target.value;
    this.setState({data: object});
    this.setState({dirty: true});
@@ -146,7 +147,9 @@ render() {
 
 Register.propTypes = {
   actions: PropTypes.object.isRequired,
-  authenticationError: PropTypes.string
+  authenticationError: PropTypes.string,
+  route : PropTypes.object,
+  router : PropTypes.object
 };
 
 //Pull in the React Router context so router is available on this.context.router.
